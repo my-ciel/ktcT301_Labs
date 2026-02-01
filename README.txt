@@ -10,11 +10,10 @@ This project is a specialized web template designed for the "kt cloud Intermedia
 - DB Tier: A managed database layer utilizing kt cloud DBaaS for secure and scalable data storage.
 
 3. DIRECTORY STRUCTURE
-web/: A directory containing all the frontend web assets and static resources.
-default: The Nginx configuration file used for setting up the web server and proxy.
-myapp: The core backend application binary compiled from Go source code.
-README.txt: A guide file providing step-by-step instructions for the lab.
-setup_was.sh: A shell script to automate the registration of the Go app as a systemd service.
+- web/: A directory containing all the frontend web assets and static resources.
+- default: The Nginx configuration file used for setting up the web server and proxy.
+- myapp: The core backend application binary compiled from Go source code.
+- setup_was.sh: A shell script to automate the registration of the application as a systemd service.
 
 4. LAB PROCEDURES
 - Step 1: Web Server Deployment
@@ -29,4 +28,5 @@ setup_was.sh: A shell script to automate the registration of the Go app as a sys
 
 
 -----------------------------------------------------------------
+
 © kt cloud. All rights reserved.
