@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - kt cloud Lab</title>
+    <style>
+        @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+        * { margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; box-sizing: border-box; }
+        body { background-color: #f5f5f5; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        
+        .container {
+            width: 450px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 50px 40px;
+            border-radius: 20px;
+            border: solid 1px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.04);
+            text-align: center;
+            position: relative;
+        }
+
+        .logo { width: 150px; margin-bottom: 40px; }
+        
+        input {
+            width: 100%;
+            height: 55px;
+            border-radius: 11px;
+            border: solid 1px #dfdfdf;
+            background: #fff;
+            margin-bottom: 15px;
+            padding: 0 20px;
+            font-size: 16px;
+        }
+        input:focus { outline: none; border-color: #0066FF; }
+
+        .btn {
+            width: 100%;
+            height: 55px;
+            border-radius: 11px;
+            background-color: #0066FF; 
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+        .btn:hover { background-color: #003399;}
+
+        .links { margin-top: 25px; font-size: 14px; color: #bebebe; }
+        .links a { color: #bebebe; text-decoration: none; margin: 0 10px; }
+        .links a:hover { color: #0066FF; }
+
+        .copyright {
+            position: absolute;
+            bottom: -50px;
+            width: 100%;
+            left: 0;
+            font-size: 14px;
+            color: #9f9f9f;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html">
+        <img src="images/ktc1.png" alt="kt cloud" class="logo">
+    </a>
+    <div id="login-msg" style="display:none; color: #ff4b4b; font-size: 14px; margin-bottom: 15px; text-align: center;">
+    </div> 
+    <form id="loginForm" autocomplete="off">
+        <input type="text" id="userid" placeholder="아이디" required autocomplete="off">
+        <input type="password" id="password" placeholder="비밀번호" required autocomplete="new-password">
+        <button type="submit" class="btn">로그인</button>
+    </form>
+
+    <div class="links">
+        <a href="#">아이디 찾기</a> | 
+        <a href="#">비밀번호 찾기</a> | 
+        <a href="signup.html">회원가입</a>
+    </div>
+
+    <div class="copyright">
+        &copy; kt cloud. All rights reserved.
+    </div>
+</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const msgBox = document.getElementById('login-msg');
+        const loginData = {
+            userid: document.getElementById('userid').value,
+            password: document.getElementById('password').value
+        };
+
+        // Nginx 프록시(/api/)를 통해 WAS의 로그인 API 호출
+        fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(loginData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // 로그인 성공 시 로직
+                msgBox.style.color = "#27ae60"; // 성공: 초록색
+                msgBox.innerText = data.message; // "xxx님 환영합니다!"
+                msgBox.style.display = 'block';
+
+                // 로그인 상태를 브라우저에 저장
+                localStorage.setItem('isLoggedIn', 'true');
+
+                // 1.5초 후 메인 페이지로 자연스럽게 이동
+                setTimeout(() => {
+                    location.href = 'index.html';
+                }, 1500);
+
+            } else {
+                // 로그인 실패 시 로직
+                msgBox.style.color = "#ff4b4b"; // 실패: 빨간색
+                msgBox.innerText = data.message; // "아이디 또는 비밀번호가 틀립니다."
+                msgBox.style.display = 'block';
+            }
+        })
+        .catch(err => {
+            // 네트워크 오류 시 로직
+            msgBox.style.color = "#ff4b4b";
+            msgBox.innerText = "로그인 서버와 통신할 수 없습니다. (Nginx/WAS 확인)";
+            msgBox.style.display = 'block';
+        });
+    });
+</script>
+
+</body>
+</html>

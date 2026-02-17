@@ -1,0 +1,261 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>kt cloud Lab</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			/* 상단 메뉴 버튼 정렬 및 스타일 */
+			#nav ul { display: flex; align-items: center; }
+			#nav ul li { 
+				margin-left: 10px; 
+				padding: 0;
+				position: relative; /* 버튼 아래 박스 배치를 위한 기준점 */
+			}
+			#nav ul li .button { 
+				min-width: 100px;
+				width: auto;
+				padding: 0 15px;
+				text-align: center;
+				font-size: 0.8em;
+				height: 2.8em;
+				line-height: 2.8em;
+				white-space: nowrap;
+			}
+
+			/* 버튼 아래 조그만 박스형 상태 표시기 */
+			#stress-indicator {
+				display: none; /* 평소에는 숨김 */
+				position: absolute;
+				top: 120%; /* 버튼 바로 아래 배치 */
+				left: 50%;
+				transform: translateX(-50%);
+				width: 140px;
+				background: #ffffff;
+				border: 1px solid #ddd;
+				border-radius: 6px;
+				box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+				padding: 10px;
+				z-index: 100;
+				text-align: center;
+				font-size: 0.75em;
+				color: #333;
+			}
+
+			.stress-text {
+				font-size: 11px;
+				color: #333;
+				margin-bottom: 5px;
+				font-weight: bold;
+			}
+
+			.progress-track {
+				width: 100%;
+				height: 4px;
+				background: #eee;
+				border-radius: 2px;
+				overflow: hidden;
+			}
+
+			#stress-progress-bar {
+				width: 100%;
+				height: 100%;
+				background: #36454F; 
+				transition: width 1s linear;
+			}
+		</style>
+	</head>
+	<body class="landing is-preload">
+		<div id="page-wrapper">
+
+			<header id="header" class="alt">
+				<h1>
+					<a href="index.html">
+						<img src="images/ktc2.png" alt="kt cloud logo" style="height: 40px; vertical-align: middle;">
+					</a>
+				</h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li>
+							<a href="#" class="icon solid fa-angle-down">관련사이트</a>
+							<ul>
+								<li><a href="https://cloud.kt.com/marketplace/?utm_source=cloud&utm_medium=gnb" target="_blank">마켓플레이스</a></li>
+								<li><a href="https://edu.cloud.kt.com/" target="_blank">교육포털</a></li>
+                                                                <li><a href="https://cloud.kt.com/support/" target="_blank">고객지원</a></li>
+							</ul>
+						</li>
+						<li id="menu-login"><a href="login.html" class="button">Login</a></li>
+						<li id="menu-logout" style="display:none;"><a href="javascript:void(0);" class="button" onclick="logout()">Logout</a></li>
+						
+						<li><a href="signup.html" class="button">Sign Up</a></li>
+						<li><a href="#" class="button" id="hostname-btn">HOSTNAME</a></li>
+						
+						<li>
+							<a href="javascript:void(0);" class="button primary" id="stress-btn" onclick="runStress()">STRESS TEST</a>
+							<div id="stress-indicator">
+								<div class="stress-text">부하테스트 중...</div>
+								<div class="progress-track">
+									<div id="stress-progress-bar"></div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</nav>
+			</header>
+
+			<section id="banner">
+				<h2>kt cloud Intermediate Course Lab</h2>
+				<p>kt 클라우드에서 핵심 서비스 구축하기</p>
+				<ul class="actions special">
+					<li><a href="https://cloud.kt.com/" class="button primary" target="_blank">kt cloud</a></li>
+					<li><a href="https://tech.ktcloud.com/" class="button" target="_blank">Tech Blog</a></li>
+				</ul>
+			</section>
+
+			<section id="main" class="container">
+				<section class="box special">
+					<header class="major">
+						<h2>kt cloud 기반 웹 서비스 배포 실습</h2>
+						<p>본 실습은 kt cloud 인프라를 활용하여 <br />
+						3-Tier 아키텍처 기반의 웹 서비스를 공개하는 과정을 학습합니다.</p>
+					</header>
+					<span class="image featured"><img src="images/pic01.jpg" alt="kt cloud Infrastructure" /></span>
+				</section>
+
+				<section class="box special features">
+					<div class="features-row">
+						<section>
+							<span class="icon solid major fa-server accent2"></span>
+							<h3>Compute</h3>
+							<p>높은 신뢰도와 안정성을 가진</br>최고급 클라우드 인프라 서비스를 제공합니다.</p>
+						</section>
+						<section>
+							<span class="icon solid major fa-network-wired accent3"></span>
+							<h3>Networking</h3>
+							<p>빠르고 안정적인 고품질의 네트워크 서비스를 제공하여</br>웹 서비스의 접근 제어와 보안을 설정합니다.</p>
+						</section>
+					</div>
+					<div class="features-row">
+						<section>
+							<span class="icon solid major fa-cubes accent4"></span>
+							<h3>Container</h3>
+							<p>kt cloud 환경에서 다양한 Container 서비스를</br>빠르고 간편하게 제공합니다.</p>
+						</section>
+						<section>
+							<span class="icon solid major fa-lock accent5"></span>
+							<h3>Security</h3>
+							<p>데이터와 애플리케이션을 효과적으로 보호하는</br>보안/관리 서비스를 제공합니다.</p>
+						</section>
+					</div>
+				</section>
+			</section>
+
+			<section id="cta">
+				<h2>Ready to Cloud?</h2>
+				<p>지금 바로 kt cloud 환경에서 웹 서비스를 시작해 보세요.</p>
+				<form>
+					<div class="row gtr-50 gtr-uniform">
+						<div class="col-8 col-12-mobilep">
+							<input type="email" name="email" id="email" placeholder="이메일 주소를 입력하세요" />
+						</div>
+						<div class="col-4 col-12-mobilep">
+							<input type="submit" value="소식 받기" class="fit" />
+						</div>
+					</div>
+				</form>
+			</section>
+
+			<footer id="footer">
+                                <ul class="icons">
+					<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+					<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+					<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+					<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+					<li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>&copy; kt cloud. All rights reserved.</li>
+				</ul>
+			</footer>
+
+		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+		<script>
+			window.onload = function() {
+				const isLoggedIn = localStorage.getItem('isLoggedIn');
+				const loginBtn = document.getElementById('menu-login');
+				const logoutBtn = document.getElementById('menu-logout');
+
+				if (isLoggedIn === 'true') {
+					loginBtn.style.display = 'none';
+					logoutBtn.style.display = 'block';
+				} else {
+					loginBtn.style.display = 'block';
+					logoutBtn.style.display = 'none';
+				}
+
+				fetch('/api/hostname')
+					.then(res => res.json())
+					.then(data => {
+						if (data.hostname) {
+							document.getElementById('hostname-btn').innerText = data.hostname;
+						}
+					})
+					.catch(err => console.log("Hostname load failed"));
+			};
+
+			function logout() {
+				localStorage.removeItem('isLoggedIn');
+				localStorage.clear();
+				sessionStorage.clear();
+				location.reload(); 
+			}
+
+			function runStress() {
+				const totalSeconds = 600; // 10분 설정
+				let remaining = totalSeconds;
+
+				const indicator = document.getElementById('stress-indicator');
+				const progressBar = document.getElementById('stress-progress-bar');
+				const stressBtn = document.getElementById('stress-btn');
+
+				// 1. 즉시 UI 표시 및 버튼 비활성화
+				indicator.style.display = 'block';
+				stressBtn.style.pointerEvents = 'none';
+				stressBtn.style.opacity = '0.5';
+				progressBar.style.width = "100%";
+
+				// 2. 서버 부하 요청 
+				fetch('/api/stress').catch(err => console.log("부하 요청 전송됨"));
+
+				// 3. 타이머 시작
+				const timer = setInterval(() => {
+					remaining--;
+					
+					// 막대 너비 업데이트
+					const percent = (remaining / totalSeconds) * 100;
+					progressBar.style.width = percent + "%";
+
+					// 10분 경과 시 종료
+					if (remaining <= 0) {
+						clearInterval(timer);
+						indicator.style.display = 'none';
+						stressBtn.style.pointerEvents = 'auto';
+						stressBtn.style.opacity = '1';
+					}
+				}, 1000);
+			}
+		</script>
+	</body>
+</html>
